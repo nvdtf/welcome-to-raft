@@ -21,10 +21,10 @@ There is no explicit configuration needed. Please make sure deployment addresses
 ## This Repository
 As a demo, you can claim a special FLOAT through Raft!
 * [scripts/get_event.cdc](scripts/get_event.cdc)
-    Displays FLOAT event's data. For this example, you can pass the host address (`0xbf9acaa0b935d9cd`) and `698959814` as `eventId`.
+    Displays event data for the Raft FLOAT.
 * [scripts/has_claimed_event.cdc](scripts/has_claimed_event.cdc)
-    Checks if the event has been claimed by given user. For this example, set the host address to `0xbf9acaa0b935d9cd` and `698959814` as `eventId`. Set `accountAddress` to your own account's address.
+    Checks if the event has been claimed by given user. Set `accountAddress` to your own account's address.
 * [transactions/claim.cdc](transactions/claim.cdc)
-    Claims FLOAT. For this FLOAT, set `eventId` to `698959814` and the host address to `0xbf9acaa0b935d9cd`. Leave the `secret` argument empty.
+    Claims FLOAT. For this FLOAT, set `eventId` to `698959814` and the host address to `0xbf9acaa0b935d9cd`. Leave the `secretSig` argument empty.
 
 Note that this repository uses hard-coded import addresses, so it won't work on testnet.
