@@ -26,3 +26,5 @@ As a demo, you can claim a special FLOAT through Raft!
     Checks if the event has been claimed by given user. For this example, set the host address to `0xbf9acaa0b935d9cd` and `698959814` as `eventId`. Set `accountAddress` to your own account's address.
 * [transactions/claim.cdc](transactions/claim.cdc)
     Claims FLOAT. For this FLOAT, set `eventId` to `698959814` and the host address to `0xbf9acaa0b935d9cd`. Leave the `secret` argument empty.
+
+Note that this repository uses hard-coded import addresses, so it won't work on testnet.
