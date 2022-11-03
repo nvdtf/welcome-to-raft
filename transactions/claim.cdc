@@ -1,69 +1,70 @@
-import FLOAT from 0x2d4c3caffbeab845
-import FLOATVerifiers from 0x2d4c3caffbeab845
-import NonFungibleToken from 0x1d7e57aa55817448
-import MetadataViews from 0x1d7e57aa55817448
-import GrantedAccountAccess from 0x2d4c3caffbeab845
-import FlowToken from 0x1654653399040a61
 
-transaction(eventId: UInt64, host: Address, secretSig: String?) {
+      import FLOAT from 0x2d4c3caffbeab845
+      import FLOATVerifiers from 0x2d4c3caffbeab845
+      import NonFungibleToken from 0x1d7e57aa55817448
+      import MetadataViews from 0x1d7e57aa55817448
+      import GrantedAccountAccess from 0x2d4c3caffbeab845
+      import FlowToken from 0x1654653399040a61
 
-  let FLOATEvent: &FLOAT.FLOATEvent{FLOAT.FLOATEventPublic}
-  let Collection: &FLOAT.Collection
-  let FlowTokenVault: &FlowToken.Vault
+      transaction(eventId: UInt64, host: Address, secretSig: String?) {
 
-  prepare(acct: AuthAccount) {
-    // SETUP COLLECTION
-    if acct.borrow<&FLOAT.Collection>(from: FLOAT.FLOATCollectionStoragePath) == nil {
-        acct.save(<- FLOAT.createEmptyCollection(), to: FLOAT.FLOATCollectionStoragePath)
-        acct.link<&FLOAT.Collection{NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, MetadataViews.ResolverCollection, FLOAT.CollectionPublic}>
-                (FLOAT.FLOATCollectionPublicPath, target: FLOAT.FLOATCollectionStoragePath)
-    }
+        let FLOATEvent: &FLOAT.FLOATEvent{FLOAT.FLOATEventPublic}
+        let Collection: &FLOAT.Collection
+        let FlowTokenVault: &FlowToken.Vault
 
-    // SETUP FLOATEVENTS
-    if acct.borrow<&FLOAT.FLOATEvents>(from: FLOAT.FLOATEventsStoragePath) == nil {
-      acct.save(<- FLOAT.createEmptyFLOATEventCollection(), to: FLOAT.FLOATEventsStoragePath)
-      acct.link<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic, MetadataViews.ResolverCollection}>
-                (FLOAT.FLOATEventsPublicPath, target: FLOAT.FLOATEventsStoragePath)
-    }
+        prepare(acct: AuthAccount) {
+          // SETUP COLLECTION
+          if acct.borrow<&FLOAT.Collection>(from: FLOAT.FLOATCollectionStoragePath) == nil {
+              acct.save(<- FLOAT.createEmptyCollection(), to: FLOAT.FLOATCollectionStoragePath)
+              acct.link<&FLOAT.Collection{NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, MetadataViews.ResolverCollection, FLOAT.CollectionPublic}>
+                      (FLOAT.FLOATCollectionPublicPath, target: FLOAT.FLOATCollectionStoragePath)
+          }
 
-    // SETUP SHARED MINTING
-    if acct.borrow<&GrantedAccountAccess.Info>(from: GrantedAccountAccess.InfoStoragePath) == nil {
-        acct.save(<- GrantedAccountAccess.createInfo(), to: GrantedAccountAccess.InfoStoragePath)
-        acct.link<&GrantedAccountAccess.Info{GrantedAccountAccess.InfoPublic}>
-                (GrantedAccountAccess.InfoPublicPath, target: GrantedAccountAccess.InfoStoragePath)
-    }
+          // SETUP FLOATEVENTS
+          if acct.borrow<&FLOAT.FLOATEvents>(from: FLOAT.FLOATEventsStoragePath) == nil {
+            acct.save(<- FLOAT.createEmptyFLOATEventCollection(), to: FLOAT.FLOATEventsStoragePath)
+            acct.link<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic, MetadataViews.ResolverCollection}>
+                      (FLOAT.FLOATEventsPublicPath, target: FLOAT.FLOATEventsStoragePath)
+          }
 
-    let FLOATEvents = getAccount(host).getCapability(FLOAT.FLOATEventsPublicPath)
-                        .borrow<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic}>()
-                        ?? panic("Could not borrow the public FLOATEvents from the host.")
-    self.FLOATEvent = FLOATEvents.borrowPublicEventRef(eventId: eventId) ?? panic("This event does not exist.")
+          // SETUP SHARED MINTING
+          if acct.borrow<&GrantedAccountAccess.Info>(from: GrantedAccountAccess.InfoStoragePath) == nil {
+              acct.save(<- GrantedAccountAccess.createInfo(), to: GrantedAccountAccess.InfoStoragePath)
+              acct.link<&GrantedAccountAccess.Info{GrantedAccountAccess.InfoPublic}>
+                      (GrantedAccountAccess.InfoPublicPath, target: GrantedAccountAccess.InfoStoragePath)
+          }
 
-    self.Collection = acct.borrow<&FLOAT.Collection>(from: FLOAT.FLOATCollectionStoragePath)
-                        ?? panic("Could not get the Collection from the signer.")
+          let FLOATEvents = getAccount(host).getCapability(FLOAT.FLOATEventsPublicPath)
+                              .borrow<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic}>()
+                              ?? panic("Could not borrow the public FLOATEvents from the host.")
+          self.FLOATEvent = FLOATEvents.borrowPublicEventRef(eventId: eventId) ?? panic("This event does not exist.")
 
-    self.FlowTokenVault = acct.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)
-                            ?? panic("Could not borrow the FlowToken.Vault from the signer.")
-  }
+          self.Collection = acct.borrow<&FLOAT.Collection>(from: FLOAT.FLOATCollectionStoragePath)
+                              ?? panic("Could not get the Collection from the signer.")
 
-  execute {
-    let params: {String: AnyStruct} = {}
+          self.FlowTokenVault = acct.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)
+                                  ?? panic("Could not borrow the FlowToken.Vault from the signer.")
+        }
 
-    // If the FLOAT has a secret phrase on it
-    if let unwrappedSecretSig = secretSig {
-      params["secretSig"] = unwrappedSecretSig
-    }
+        execute {
+          let params: {String: AnyStruct} = {}
 
-    // If the FLOAT costs something
-    if let prices = self.FLOATEvent.getPrices() {
-      log(prices)
-      let payment <- self.FlowTokenVault.withdraw(amount: prices[self.FlowTokenVault.getType().identifier]!.price)
-      self.FLOATEvent.purchase(recipient: self.Collection, params: params, payment: <- payment)
-      log("Purchased the FLOAT.")
-    }
-    // If the FLOAT is free
-    else {
-      self.FLOATEvent.claim(recipient: self.Collection, params: params)
-      log("Claimed the FLOAT.")
-    }
-  }
-}
+          // If the FLOAT has a secret phrase on it
+          if let unwrappedSecretSig = secretSig {
+            params["secretSig"] = unwrappedSecretSig
+          }
+
+          // If the FLOAT costs something
+          if let prices = self.FLOATEvent.getPrices() {
+            log(prices)
+            let payment <- self.FlowTokenVault.withdraw(amount: prices[self.FlowTokenVault.getType().identifier]!.price)
+            self.FLOATEvent.purchase(recipient: self.Collection, params: params, payment: <- payment)
+            log("Purchased the FLOAT.")
+          }
+          // If the FLOAT is free
+          else {
+            self.FLOATEvent.claim(recipient: self.Collection, params: params)
+            log("Claimed the FLOAT.")
+          }
+        }
+      }
