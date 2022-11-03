@@ -5,7 +5,7 @@ import MetadataViews from 0x1d7e57aa55817448
 import GrantedAccountAccess from 0x2d4c3caffbeab845
 import FlowToken from 0x1654653399040a61
 
-transaction(eventId: UInt64, host: Address, secret: String?) {
+transaction(eventId: UInt64, host: Address, secretSig: String?) {
 
   let FLOATEvent: &FLOAT.FLOATEvent{FLOAT.FLOATEventPublic}
   let Collection: &FLOAT.Collection
@@ -49,12 +49,13 @@ transaction(eventId: UInt64, host: Address, secret: String?) {
     let params: {String: AnyStruct} = {}
 
     // If the FLOAT has a secret phrase on it
-    if let unwrappedSecret = secret {
-      params["secretPhrase"] = unwrappedSecret
+    if let unwrappedSecretSig = secretSig {
+      params["secretSig"] = unwrappedSecretSig
     }
 
     // If the FLOAT costs something
     if let prices = self.FLOATEvent.getPrices() {
+      log(prices)
       let payment <- self.FlowTokenVault.withdraw(amount: prices[self.FlowTokenVault.getType().identifier]!.price)
       self.FLOATEvent.purchase(recipient: self.Collection, params: params, payment: <- payment)
       log("Purchased the FLOAT.")

@@ -1,6 +1,10 @@
 import FLOAT from 0x2d4c3caffbeab845
 
-pub fun main(account: Address, eventId: UInt64): FLOATEventMetadata {
+pub fun main(): FLOATEventMetadata {
+  // Raft FLOAT params
+  let eventId: UInt64 = 698959814
+  let account: Address = 0xbf9acaa0b935d9cd
+
   let floatEventCollection = getAccount(account).getCapability(FLOAT.FLOATEventsPublicPath)
                               .borrow<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic}>()
                               ?? panic("Could not borrow the FLOAT Events Collection from the account.")

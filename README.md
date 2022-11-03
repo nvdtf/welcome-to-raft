@@ -6,14 +6,14 @@ Raft is a web application that uses FCL to run Cadence transactions and scripts 
 Raft aims to simplify sharing and composability on Flow by creating an effortless dapp delivery platform that uses open-source and blockchain as source-of-truth. Raft’s vision is to provide a platform that eliminates the need to create explicit  Frontend/Backend systems by delivering dapps to users directly from open-source GitHub repositories containing Cadence code.
 
 ## Usage
-You can open any **public** repository by replacing `github.com` with `beta.raft.pub`
+You can open any **public** repository by replacing `github.com` with `raft.page`
 
 Raft is compatible with most Cadence repositories. Some repositories you can try:
-* https://beta.raft.pub/emerald-dao/float
-* https://beta.raft.pub/crash13override/flovatar
-* https://beta.raft.pub/Flowtyio/lost-and-found
-* https://beta.raft.pub/onflow/nft-storefront/
-* https://beta.raft.pub/nvdtf/flow-contract-auditor-sample
+* https://raft.page/emerald-dao/float
+* https://raft.page/crash13override/flovatar
+* https://raft.page/Flowtyio/lost-and-found
+* https://raft.page/onflow/nft-storefront/
+* https://raft.page/nvdtf/flow-contract-auditor-sample
 
 ### How can I make my repository compatible with Raft?
 There is no explicit configuration needed. Please make sure deployment addresses are specified in the `flow.json` file.
