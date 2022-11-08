@@ -9,6 +9,7 @@ Raft aims to simplify sharing and composability on Flow by creating an effortles
 You can open any **public** repository by replacing `github.com` with `raft.page`
 
 Raft is compatible with most Cadence repositories. Some repositories you can try:
+* https://raft.page/dapperlabs/nft-catalog
 * https://raft.page/emerald-dao/float
 * https://raft.page/crash13override/flovatar
 * https://raft.page/Flowtyio/lost-and-found

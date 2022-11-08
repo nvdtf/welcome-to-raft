@@ -1,10 +1,10 @@
 
-      import FLOAT from 0x2d4c3caffbeab845
-      import FLOATVerifiers from 0x2d4c3caffbeab845
-      import NonFungibleToken from 0x1d7e57aa55817448
-      import MetadataViews from 0x1d7e57aa55817448
-      import GrantedAccountAccess from 0x2d4c3caffbeab845
-      import FlowToken from 0x1654653399040a61
+      import FLOAT from "FLOAT"
+      import FLOATVerifiers from "FLOATVerifiers"
+      import NonFungibleToken from "NonFungibleToken"
+      import MetadataViews from "MetadataViews"
+      import GrantedAccountAccess from "GrantedAccountAccess"
+      import FlowToken from "FlowToken"
 
       transaction(eventId: UInt64, host: Address, secretSig: String?) {
  

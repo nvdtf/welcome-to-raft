@@ -1,0 +1,39 @@
+{
+	"contracts": {
+		"FlowToken": {
+			"aliases": {
+				"mainnet" : "1654653399040a61"
+			}
+		},
+        "GrantedAccountAccess": {
+			"aliases": {
+				"mainnet" : "2d4c3caffbeab845"
+			}
+		},
+        "MetadataViews": {
+			"aliases": {
+				"mainnet" : "1d7e57aa55817448"
+			}
+		},
+        "NonFungibleToken": {
+			"aliases": {
+				"mainnet" : "1d7e57aa55817448"
+			}
+		},
+        "FLOATVerifiers": {
+			"aliases": {
+				"mainnet" : "2d4c3caffbeab845"
+			}
+		},
+        "FLOAT": {
+			"aliases": {
+				"mainnet" : "2d4c3caffbeab845"
+			}
+		}
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	}
+}
