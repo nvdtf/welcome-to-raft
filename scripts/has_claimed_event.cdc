@@ -1,4 +1,4 @@
-import FLOAT from 0x2d4c3caffbeab845
+import FLOAT from "FLOAT"
 
 pub fun main(accountAddress: Address): FLOAT.TokenIdentifier? {
   // Raft FLOAT params
