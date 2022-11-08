@@ -25,7 +25,7 @@ As a demo, you can claim a special FLOAT through Raft!
     Displays event data for the Raft FLOAT.
 * [scripts/has_claimed_event.cdc](scripts/has_claimed_event.cdc)
     Checks if the event has been claimed by given user. Set `accountAddress` to your own account's address.
-* [transactions/claim.cdc](transactions/claim.cdc)
+* [transactions/claim.cdc](transactions/claim.cdc?eventId=698959814&host=0xbf9acaa0b935d9cd)
     Claims FLOAT. For this FLOAT, set `eventId` to `698959814` and the host address to `0xbf9acaa0b935d9cd`. Leave the `secretSig` argument empty.
 
 Note that this repository uses hard-coded import addresses, so it won't work on testnet.
